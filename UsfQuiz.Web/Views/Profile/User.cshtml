@@ -1,0 +1,93 @@
+﻿@using UsfQuiz.Data.Commons
+@using UsfQuiz.Web.Controllers
+
+@model UsfQuiz.Web.ViewModels.Profile.UserProfileViewModel
+
+@{
+    ViewBag.Title = @Model.UserProfile.FirstName + "'s Profile";
+}
+
+<div class="category-wrapper">
+    <div class="article-body clearfix">
+        <div class="article-content col-md-4">
+            <div class="quiz-details well">
+                <div class="basic-info">
+                    <!-- Editable Content -->
+                    <div id="editable-info" class="toggle-control">
+                        @Html.DisplayForModel()
+                    </div>
+                    <p>
+                        <label>Full Name:</label> @Model.UserProfile.FirstName @Model.UserProfile.LastName
+                    </p>
+                    <p>
+                        <label>Email:</label> @Model.UserProfile.Email
+                    </p>
+                    @if (User.IsInRole(GlobalConstants.Admin)) { 
+                        <p>
+                            <label>Number of quizzes created:</label>
+                            <span>@Model.UserProfile.QuizzesCreated</span>
+                        </p>
+                        }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#home" data-toggle="tab" aria-expanded="true">Latest created quiz</a></li>
+            <li class=""><a href="#profile" data-toggle="tab" aria-expanded="false">Latest solved quiz</a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="home">
+                @if (Model.QuizzesCreated.Count > 0)
+                {
+                    <ol>
+                        @foreach (var quiz in Model.QuizzesCreated)
+                        {
+                            <li>
+                                <h4>
+
+                                    @(Html.ActionLink<SolveQuizController>(quiz.Name, c => c.Solve(quiz.Id))),
+                                    @quiz.CreatedOn.ToShortDateString(),
+                                    @(Html.ActionLink<SolveQuizController>("Take Quiz", c => c.Solve(quiz.Id), null, new
+                                {
+                                    @class = "btn btn-primary btn-sm",
+                                }))
+                                </h4>
+                            </li>
+                        }
+                    </ol>
+                }
+                else
+                {
+                    <p>No Quizzes</p>
+                }
+            </div>
+            <div class="tab-pane fade" id="profile">
+                @if (Model.QuizzesTaken.Count > 0)
+                {
+                    <ol>
+                        @foreach (var solution in Model.QuizzesTaken)
+                        {
+                            <li>
+                                <h4>
+                                    @(Html.ActionLink<ResultsController>(
+                                          solution.Title, c => c.Performance(solution.Id))), on @solution.CreatedOn.ToLongDateString()
+                                        @(Html.ActionLink<ResultsController>("View Result", c => c.Performance(solution.Id), null, new
+                                {
+                                    @class = "btn btn-primary btn-sm",
+                                }))
+
+                                    </h4>
+                                </li>
+                        }
+                    </ol>
+                }
+                else
+                {
+                    <p>No Quizzes</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

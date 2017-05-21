@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsfQuiz.Data", "UsfQuiz.Data\UsfQuiz.Data.csproj", "{A727E8AE-0103-467E-A39F-D76D74FC0875}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsfQuiz.Web", "UsfQuiz.Web\UsfQuiz.Web.csproj", "{B52A6707-3E58-4A6D-813E-6C18C577269C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsfQuiz.Services", "UsfQuiz.Services\UsfQuiz.Services.csproj", "{C12065F7-01FF-4C79-8F12-EB16AD1CE92E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A727E8AE-0103-467E-A39F-D76D74FC0875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A727E8AE-0103-467E-A39F-D76D74FC0875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A727E8AE-0103-467E-A39F-D76D74FC0875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A727E8AE-0103-467E-A39F-D76D74FC0875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B52A6707-3E58-4A6D-813E-6C18C577269C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B52A6707-3E58-4A6D-813E-6C18C577269C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B52A6707-3E58-4A6D-813E-6C18C577269C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B52A6707-3E58-4A6D-813E-6C18C577269C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C12065F7-01FF-4C79-8F12-EB16AD1CE92E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C12065F7-01FF-4C79-8F12-EB16AD1CE92E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C12065F7-01FF-4C79-8F12-EB16AD1CE92E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C12065F7-01FF-4C79-8F12-EB16AD1CE92E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

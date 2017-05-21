@@ -1,0 +1,17 @@
+﻿@using UsfQuiz.Data.Commons
+<td>
+    <input type="text" ng-model="category.name"
+           class="form-control" name="categoryName"
+           required ng-minlength="@GlobalConstants.NameMinLength"
+           placeholder="Name">
+</td>
+<td>
+    <button ng-show="category.name != null" class="btn btn-primary" ng-click="ctrl.openImagesMenu(category,'lg')">
+        Select Image
+    </button>
+    <a href="{{category.imageUrl}}" class="hide-overflow">{{category.imageUrl}}</a>
+</td>
+
+<td class="btn-group">
+    <button class="btn btn-primary" ng-click="ctrl.addNew(category)">Save</button>
+</td>

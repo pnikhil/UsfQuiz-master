@@ -1,0 +1,29 @@
+﻿@using UsfQuiz.Web.ViewModels
+@using UsfQuiz.Web.ViewModels.Account
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Log in / Register";
+    var labelAttributes = new { @class = "col-md-3 control-label" };
+    var inputAttributes = new { @class = "form-control" };
+    var validationAttributes = new { @class = "text-danger" };
+}
+
+@if (ViewBag.Error != null)
+{
+    @section notification {
+        @{
+            var notification = new Notification { Message = ViewBag.Error, StyleClass = "alert-danger" };
+        }
+
+        @Html.Partial("_NotificationPartial", notification);
+    }
+}
+<div class="category-wrapper">
+<div class="col-md-7">
+    @Html.Partial("_GoogleLoginPartial", new GoogleLoginViewModel {ReturnUrl = ViewBag.ReturnUrl})
+</div>
+<div class="col-md-7">
+       
+            @Html.Partial("_AdminLoginPartial")
+    </div>
+</div>

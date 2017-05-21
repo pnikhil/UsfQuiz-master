@@ -1,0 +1,41 @@
+﻿@model UsfQuiz.Web.ViewModels.Account.LoginViewModel
+
+<section class="well bs-component" id="loginForm">
+    <legend>Admin Login</legend>
+    @using (Html.BeginForm("Login", "Account", new {ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+    {
+        <fieldset>
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Username, new {@class = "col-md-3 control-label"})
+                <div class="col-md-6">
+                    @Html.TextBoxFor(m => m.Username, new {@class = "form-control", id = "adminUsername",placeholder="Admin username"})
+                    @Html.ValidationMessageFor(m => m.Username, string.Empty, new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new {@class = "col-md-3 control-label"})
+                <div class="col-md-6">
+                    @Html.PasswordFor(m => m.Password, new {@class = "form-control", id = "adminPassword",placeholder="Password"})
+                    @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="col-md-7 col-lg-offset-6">
+                <button id="autoFill" class="btn btn-default">Auto Fill</button>
+                <input type="submit" value="Log in" class="btn btn-primary" />
+            </div>
+
+        </fieldset>
+    }
+</section>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#autoFill").click(function() {
+            $("#adminUsername").val("admin");
+            $("#adminPassword").val("T3chart@123");
+        });
+    });
+</script>

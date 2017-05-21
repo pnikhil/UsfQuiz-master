@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @RenderSection("meta", required: false)
+
+    <title>@ViewBag.Title - Quiz Project</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("styles", required: false)
+    
+</head>
+
+<body>
+@Html.Partial("_HeaderPartial")
+<div id="main-wrapper">
+    @RenderSection("notification", required: false)
+    <div id="content-wrapper" class="container body-content">
+        <div class="page">
+            <div class="bs-header" id="content" tabindex="-1">
+                <div class="container">
+                    <h3 class="pull-left" style="color: white; text-transform: uppercase;">@ViewBag.Title</h3>
+                </div>
+            </div>
+    
+            <div class="wrapper">
+                <div class="container-fluid clearfix">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        @* @RenderBody()*@
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
+</body>
+@Html.Partial("_FooterPartial")
+</html>

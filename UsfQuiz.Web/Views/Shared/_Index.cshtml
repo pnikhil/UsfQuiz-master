@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+}
+<!-- Main Content-->
+<div class="main-content col-md-12">
+    <section>
+        @RenderBody()
+    </section>
+</div>
+
+@section notification {
+    @RenderSection("notification", required: false)
+}
+@section styles {
+    @RenderSection("styles", required: false)
+}
+@section Scripts {
+    @RenderSection("Scripts", false)
+}

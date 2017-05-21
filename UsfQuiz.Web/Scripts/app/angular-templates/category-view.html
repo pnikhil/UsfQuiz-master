@@ -1,0 +1,25 @@
+﻿<tr>
+    <td ng-hide="category.editMode" class="col-md-4">{{category.name}}</td>
+    <td ng-show="category.editMode">
+        <input type="text" ng-model="category.name"
+               class="form-control col-md-4" name="categoryName"
+               required ng-minlength="2"
+               placeholder="Category Name (Min Length: 3 char)">
+    </td>
+    <td ng-hide="category.editMode"><img ng-src="{{category.imageUrl}}"></td>
+    <td ng-show="category.editMode">
+        <button class="btn btn-primary" ng-click="ctrl.openImagesMenu(category,'lg')">
+            Select Image
+        </button>
+        <a href="{{category.imageUrl}}" class="hide-overflow">{{category.imageUrl}}</a>
+    </td>
+    <td class="btn-group">
+        <div ng-hide="category.editMode">
+            <button class="btn btn-primary" ng-click="ctrl.toggleMode(category)">Edit</button>
+        </div>
+        <div ng-show="category.editMode">
+            <button class="btn btn-primary" ng-disabled="category.name == ''" ng-click="ctrl.save(category)">Save</button>
+            <button class="btn btn-danger" ng-click="ctrl.toggleMode(category)">Cancel</button>
+        </div>
+    </td>
+</tr>

@@ -1,0 +1,39 @@
+﻿@using UsfQuiz.Data.Commons
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand" style="color: black;font-size: 22px;">Quiz Application</a>
+            <button data-toggle="collapse" data-target="#main-nav" aria-expanded="false" class="navbar-toggle collapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div id="main-nav" aria-expanded="false" style="height: 0.8px;" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="@Url.Action("Index","Home")" id="loginLink"><i class="fa fa-home"></i> HOME</a>
+                </li>
+                @if (Request.IsAuthenticated)
+                {
+                    if (User.IsInRole(GlobalConstants.Admin))
+                    {
+                    <li>
+                        <a href="@Url.Action("Add", "NewQuiz")"><i class="fa fa-question-circle"></i> NEW QUIZ</a>
+                    </li>
+                    
+                        <li>
+                            <a href="@Url.Action("Manage", "Categories")"><i class="fa fa-tags"></i> MANAGE CATEGORIES</a>
+                        </li> 
+                     }
+                 }
+                <li>
+                    <a href="@Url.Action("AllCategories", "Home")"><i class="fa fa-list"></i> ALL CATEGORIES</a>
+                </li>
+        </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+</nav>

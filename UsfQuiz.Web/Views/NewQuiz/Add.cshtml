@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = $"Create New Quiz";
+}
+
+@Html.Partial("_AddQuizPartial")
+
+@section styles {
+    @Styles.Render("~/Content/bootstrap-switch")
+    @Styles.Render("~/Content/toaster")
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/new-quiz")
+    @Scripts.Render("~/bundles/categories")
+}

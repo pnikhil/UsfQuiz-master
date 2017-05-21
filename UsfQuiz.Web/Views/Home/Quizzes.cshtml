@@ -1,0 +1,144 @@
+﻿@using Microsoft.AspNet.Identity
+@using UsfQuiz.Data.Commons
+@using UsfQuiz.Web.Controllers
+@using UsfQuiz.Web.ViewModels
+@model UsfQuiz.Web.ViewModels.Home.HomePageViewModel
+@{
+    ViewBag.Title = "Category: " + Request.QueryString["CategoryName"];
+    Notification notification = null;
+
+    if (TempData["error"] != null)
+    {
+        notification = new Notification { Message = (string)TempData["error"], StyleClass = "alert-danger" };
+    }
+    else if (TempData["notification"] != null)
+    {
+        notification = new Notification { Message = (string)TempData["notification"], StyleClass = "alert-info" };
+    }
+
+    if (notification != null)
+    {
+        Html.RenderPartial("_NotificationPartial", notification);
+    }
+}
+
+@if (!Model.Quizzes.Any())
+{
+    <div class="category-wrapper">
+        <h4>No quizzes added under this category</h4>
+    </div>
+}
+@foreach (var quiz in Model.Quizzes)
+{
+    <div class="category-wrapper">
+        <div class="col-lg-10">
+            <div class="bs-component">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Quiz Name - @quiz.Name</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="single-article">
+                            @{
+                                string author = string.IsNullOrEmpty(quiz.CreatedBy.FirstName)
+                                    ? quiz.CreatedBy.UserName
+                                    : $"{quiz.CreatedBy.FirstName} {quiz.CreatedBy.LastName}";
+                            }
+                            <section class="article-header">
+                                <h4 class="sub-title">
+                                    Added by @(Html.ActionLink<ProfileController>(author, c => c.User(quiz.CreatedBy.UserName))) on
+                                    <time datetime="@quiz.CreatedOn.ToString("DD-MM-YYYY")" class="article-date">@quiz.CreatedOn.ToLongDateString()</time>
+                                </h4>
+                            </section>
+                            <section class="article-body clearfix">
+                                <div class="article-content pull-left">
+                                    <div class="quiz-details">
+                                        <div class="description">
+                                            <p>
+                                                <label>Number of questions:</label> <span>@quiz.QuestionsCount</span>
+                                            </p>
+                                            <label>Description:</label>
+                                            <p class="hide-overflow">
+                                                @quiz.Description
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="clearfix quiz-controls">
+                            <button type="button" style="margin-right: 10px;" class="btn btn-success pull-right" data-toggle="modal" id="attemptBut_@quiz.Id" data-target="#termsConditions_@quiz.Id">Attempt Quiz</button>
+                            @if (User.Identity.GetUserId() == quiz.CreatedBy.Id || User.IsInRole(GlobalConstants.Admin))
+                            {
+                                using (Html.BeginForm<NewQuizController>(c => c.Delete(quiz.Id), FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                                    @Html.HiddenFor(m => quiz.Id)
+                                    <button type="button" style="margin-right: 10px;" class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal_@quiz.Id">Delete</button>
+                                        <div id="myModal_@quiz.Id" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Delete Quiz</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Do you want to delete the quiz - @quiz.Name?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                }
+                            }
+                            <div id="termsConditions_@quiz.Id" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Attempt Quiz - @quiz.Name</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Do you want to attempt the quiz - @quiz.Name? In order to attempt the quiz, you must agree to adhere to our Terms & Conditions. Kindly read the following and proceed to the quiz.</p>
+                                            <div class="well" style="padding-top: 0;"><h4 class="text-center">TERMS AND CONDITIONS</h4><br/>
+                                                <p>@quiz.TermsConditions</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" id="checkbox_@quiz.Id"> I Agree to the terms and conditions
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="@Url.Action("Solve", "SolveQuiz", new { id = quiz.Id })"><button disabled id="acceptBox_@quiz.Id" class="btn btn-success">Solve</button></a>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(":checkbox").click(function () {
+            $("#acceptBox_@quiz.Id").attr("disabled", !this.checked);
+        });
+        $('button[id^="#attemptBut_"]').click(function (e) {
+            $('input:checked').removeAttr('checked');
+            $('button[id="^#acceptBox_"]').attr("disabled",true);
+            e.preventDefault();
+        });
+    </script>
+}

@@ -1,0 +1,50 @@
+﻿@using UsfQuiz.Web.ViewModels
+
+@{
+    ViewBag.Title = "All Categories";
+    Notification notification = null;
+
+    if (TempData["error"] != null)
+    {
+        notification = new Notification { Message = (string)TempData["error"], StyleClass = "alert-danger" };
+    }
+    else if (TempData["notification"] != null)
+    {
+        notification = new Notification { Message = (string)TempData["notification"], StyleClass = "alert-info" };
+    }
+
+    if (notification != null)
+    {
+        Html.RenderPartial("_NotificationPartial", notification);
+    }
+}
+
+<div class="clearfix category-wrapper">
+    <div class="page-header">
+        <h1>Quiz Categories</h1>
+    </div>
+
+    @if (Model.Categories.Count == 0)
+    {
+        <h4>No Categories to display.</h4>
+    }
+    @foreach (var category in Model.Categories)
+    {
+        string imageUrl = string.IsNullOrEmpty(category.ImageUrl) ? "../Content/images/no-category.jpg"
+            : category.ImageUrl;
+
+
+        <a href="/Home/Quizzes?CategoryName=@category.Name">
+            <div class="col-xs-12 col-md-4 col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-image hide-panel-body">
+                        <img height="300px" width="300px" src="@imageUrl" class="panel-image-preview"/>
+                    </div>
+                    <div class="panel-footer panel-custom">
+                        <h4 class="panel-title" style="font-size: 15px; font-weight: bold; text-transform: uppercase;"><i class="fa fa-tag"></i> @category.Name</h4>
+                    </div>
+                </div>
+            </div>
+        </a>
+    }
+</div>

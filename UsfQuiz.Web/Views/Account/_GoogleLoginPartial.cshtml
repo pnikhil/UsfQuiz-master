@@ -1,0 +1,24 @@
+﻿@model UsfQuiz.Web.ViewModels.Account.GoogleLoginViewModel
+@using Microsoft.Owin.Security
+
+@{
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+}
+
+    <div class="page-header">
+        <h4 class="h4">Sign in or Register for the Quiz Application using your Google Account</h4>
+    </div>
+    @using (Html.BeginForm("ExternalLogin", "Account", new {Model.ReturnUrl}))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="well col-md-6">
+            <p class="text-center">
+                @foreach (AuthenticationDescription auth in loginProviders)
+                {
+                    <button type="submit" class="btn-google" id="@auth.AuthenticationType" name="provider" value="@auth.AuthenticationType" title="Log in using your @auth.Caption account"></button>
+                }
+            </p>
+        </div>
+
+    }
