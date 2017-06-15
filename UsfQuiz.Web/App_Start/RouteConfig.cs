@@ -13,19 +13,19 @@
                 name: "SubmitSolution",
                 url: "Quizzes/Solve",
                 defaults: new { controller = "SolveQuiz", action = "Solve" },
-                namespaces: new[] { "QuizProjectMvc.Web.Controllers" });
+                namespaces: new[] { "UsfQuiz.Web.Controllers" });
 
             routes.MapRoute(
                 name: "SolveQuiz",
                 url: "Quizzes/Solve/{id}",
                 defaults: new { controller = "SolveQuiz", action = "Solve" },
-                namespaces: new[] { "QuizProjectMvc.Web.Controllers" });
+                namespaces: new[] { "UsfQuiz.Web.Controllers" });
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: new[] { "QuizProjectMvc.Web.Controllers" });
+                namespaces: new[] { "UsfQuiz.Web.Controllers" });
         }
     }
 }
